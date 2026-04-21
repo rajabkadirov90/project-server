@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// file upload sozlash
+// 📦 Fayl saqlash sozlamasi
 const storage = multer.diskStorage({
   destination: "uploads/",
   filename: (req, file, cb) => {
@@ -16,19 +16,39 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// test route
+// 🧠 RAMda saqlash (hozircha)
+let projects = [];
+
+// 🏠 Test route
 app.get("/", (req, res) => {
   res.send("Server ishlayapti 🚀");
 });
 
-// upload route
+// 📤 Upload route
 app.post("/upload", upload.single("file"), (req, res) => {
+
+  const newProject = {
+    title: req.body.title,
+    file: req.file.filename,
+    date: new Date()
+  };
+
+  projects.push(newProject);
+
   res.send({
-    message: "Fayl yuklandi",
-    file: req.file
+    message: "Yuklandi",
+    project: newProject
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server 3000 portda ishlayapti");
+// 📥 Barcha loyihalarni olish
+app.get("/projects", (req, res) => {
+  res.send(projects);
+});
+
+// 🚀 Serverni ishga tushirish
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server ishlayapti 🚀");
 });

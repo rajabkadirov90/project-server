@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload Project</title>
+</head>
+<body>
+
+  <h2>Loyiha yuklash</h2>
+
+  <form id="uploadForm">
+    <input type="text" name="title" placeholder="Loyiha nomi" required><br><br>
+    <input type="file" name="file" required><br><br>
+    <button type="submit">Yuborish</button>
+  </form>
+
+  <script>
+    const form = document.getElementById("uploadForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      const res = await fetch("https://project-server-94v0.onrender.com/upload", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+      alert("Yuklandi!");
+      console.log(data);
+    });
+  </script>
+
+</body>
+</html>
