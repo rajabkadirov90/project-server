@@ -5,6 +5,7 @@ const multer = require("multer");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 // 📦 Fayl saqlash sozlamasi
 const storage = multer.diskStorage({
